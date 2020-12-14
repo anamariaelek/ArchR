@@ -18,11 +18,11 @@ createGenomeAnnotation <- function(
   filterChr = c("chrM")
   ){
 
-  .validInput(input = genome, name = "genome", valid = c("character", "bsgenome"))
-  .validInput(input = chromSizes, name = "chromSizes", valid = c("granges", "null"))
-  .validInput(input = blacklist, name = "blacklist", valid = c("granges", "null"))
-  .validInput(input = filter, name = "filter", valid = c("boolean"))
-  .validInput(input = filterChr, name = "filterChr", valid = c("character", "null"))
+  ArchR:::.validInput(input = genome, name = "genome", valid = c("character", "bsgenome"))
+  ArchR:::.validInput(input = chromSizes, name = "chromSizes", valid = c("granges", "null"))
+  ArchR:::.validInput(input = blacklist, name = "blacklist", valid = c("granges", "null"))
+  ArchR:::.validInput(input = filter, name = "filter", valid = c("boolean"))
+  ArchR:::.validInput(input = filterChr, name = "filterChr", valid = c("character", "null"))
 
   if(is.null(genome) | is.null(blacklist) | is.null(chromSizes)){
 
@@ -41,22 +41,23 @@ createGenomeAnnotation <- function(
 
     ##################
     message("Getting blacklist..")
-    blacklist <- .getBlacklist(genome = bsg@provider_version)
+    blacklist <- ArchR:::.getBlacklist(genome = bsg@metadata$genome)
 
   }else{
 
     bsg <- validBSgenome(genome)
     genome <- bsg@pkgname
     
-    chromSizes <- .validGRanges(chromSizes)
+    chromSizes <- ArchR:::.validGRanges(chromSizes)
     
-    blacklist <- .validGRanges(blacklist)
+    blacklist <- ArchR:::.validGRanges(blacklist)
 
   }
 
   SimpleList(genome = genome, chromSizes = chromSizes, blacklist = blacklist)
 
 }
+
 
 #' Create a gene annotation object for ArchR
 #' 
